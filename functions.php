@@ -42,3 +42,18 @@ function independent_publisher_footer_credits() {
 	return $my_custom_footer;
 }
 */
+
+wp_embed_register_handler( 'gist', '/https?:\/\/gist\.github\.com\/([a-z0-9]+)(\?file=.*)?/i', 'bhww_embed_handler_gist' );
+
+function bhww_embed_handler_gist( $matches, $attr, $url, $rawattr ) {
+
+    $embed = sprintf(
+            '<script src="https://gist.github.com/%1$s.js%2$s"></script>',
+            esc_attr($matches[1]),
+            esc_attr($matches[2])
+            );
+
+    return apply_filters( 'embed_gist', $embed, $matches, $attr, $url, $rawattr );
+    
+}
+?>
